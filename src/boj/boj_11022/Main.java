@@ -21,5 +21,6 @@ public class Main {
             sb.append("Case #" + t + ": ").append(a + " + " + b + " = " + (a + b) + "\n");
         }
         System.out.println(sb);
+
     }
 }
