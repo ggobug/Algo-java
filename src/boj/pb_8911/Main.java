@@ -45,10 +45,9 @@ public class Main {
                 minY = Math.min(minY, curY);
                 maxY = Math.max(maxY, curY);
             }
-
+            
             int area = (maxX - minX) * (maxY - minY);
             System.out.println(area);
         }
-
     }
 }
