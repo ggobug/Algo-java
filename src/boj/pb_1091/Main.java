@@ -48,6 +48,5 @@ public class Main {
         for (int i = 0; i < arr.length; i++) nArr[i] = arr[brr[i]];
         System.arraycopy(nArr, 0, arr, 0, arr.length);
 //        for (int i = 0; i < arr.length; i++) arr[i] = nArr[i];
-
     }
 }
