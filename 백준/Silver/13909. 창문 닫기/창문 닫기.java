@@ -5,10 +5,6 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        long N = Long.parseLong(br.readLine());
-
-        long result = (long) Math.sqrt(N);
-
-        System.out.println(result);
+        System.out.println((long) Math.sqrt(Long.parseLong(br.readLine())));
     }
 }
