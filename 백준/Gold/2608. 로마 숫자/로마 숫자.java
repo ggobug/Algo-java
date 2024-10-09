@@ -9,8 +9,6 @@ import java.util.*;
 public class Main {
 
     static Map<Character, Integer> romaNums = new HashMap<>();
-    static Set<Character> continuousNums = new HashSet<>();   // 연속 가능한 수
-    static Map<String, Integer> reversibleNums = new HashMap<>();   // 역전 가능한 수
     static Map<Integer, String> revertMap = new LinkedHashMap<>();
 
     public static void main(String[] args) throws IOException {
@@ -23,20 +21,6 @@ public class Main {
         romaNums.put('C', 100);
         romaNums.put('D', 500);
         romaNums.put('M', 1000);
-
-        // 세번까지 연속 가능한 숫자
-        continuousNums.add('I');
-        continuousNums.add('X');
-        continuousNums.add('C');
-        continuousNums.add('M');
-
-        // 역전 가능한 숫자
-        reversibleNums.put("IV", 4);
-        reversibleNums.put("IX", 9);
-        reversibleNums.put("XL", 40);
-        reversibleNums.put("XC", 90);
-        reversibleNums.put("CD", 400);
-        reversibleNums.put("CM", 900);
 
         // 변환 맵
         revertMap.put(1000, "M");
