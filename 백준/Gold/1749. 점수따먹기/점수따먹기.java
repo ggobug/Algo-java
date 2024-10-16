@@ -38,17 +38,20 @@ public class Main {
 
         int maxSum = Integer.MIN_VALUE; // 최대 구간 합
 
-        // 모든 부분 행렬의 합을 확인
+        // 행을 기준으로 구간합 계산
         for (int i1 = 1; i1 <= N; i1++) {
-            for (int j1 = 1; j1 <= M; j1++) {
-                for (int i2 = i1; i2 <= N; i2++) {
-                    for (int j2 = j1; j2 <= M; j2++) {
-                        int curSum = accum[i2][j2]
-                                - accum[i1 - 1][j2]
-                                - accum[i2][j1 - 1]
-                                + accum[i1 - 1][j1 - 1];
-                        maxSum = Math.max(maxSum, curSum);
-                    }
+            for (int i2 = i1; i2 <= N; i2++) {
+                // 열에 대한 구간 합을 저장하는 배열
+                int[] colSum = new int[M + 1];
+                for (int j = 1; j <= M; j++) {
+                    colSum[j] = accum[i2][j] - accum[i1 - 1][j] - accum[i2][j-1] + accum[i1-1][j-1];
+                }
+
+                // 슬라이딩 윈도우로 1차원 최대 구간 합을 구함
+                int currentSum = 0;
+                for (int j = 1; j <= M; j++) {
+                    currentSum = Math.max(colSum[j], currentSum + colSum[j]);
+                    maxSum = Math.max(maxSum, currentSum);
                 }
             }
         }
