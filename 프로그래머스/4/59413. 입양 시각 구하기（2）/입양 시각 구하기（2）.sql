@@ -1,0 +1,15 @@
+-- 0시부터 23시까지, 각 시간대별로 입양 건수 조회하기
+-- 임시테이블 생성
+WITH RECURSIVE hours AS (
+    SELECT 0 AS HOUR
+    UNION ALL
+    SELECT HOUR + 1
+    FROM hours
+    WHERE HOUR < 23
+)
+
+SELECT h.HOUR, COUNT(a.DATETIME) AS COUNT
+FROM hours h
+LEFT JOIN ANIMAL_OUTS a ON h.HOUR = HOUR(a.DATETIME)
+GROUP BY h.HOUR
+ORDER BY h.HOUR;
