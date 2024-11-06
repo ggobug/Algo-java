@@ -1,0 +1,3 @@
+SELECT ANIMAL_TYPE, count(*) count from ANIMAL_INS 
+group by ANIMAL_TYPE
+ORDER BY ANIMAL_TYPE ASC;
