@@ -4,6 +4,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -17,17 +18,10 @@ public class Main {
         int V = Integer.parseInt(st.nextToken());   // 마을 수
         int E = Integer.parseInt(st.nextToken());   // 도로 수
 
+        // 거리 배열 초기화
         int[][] dist = new int[V + 1][V + 1];
-
-        // 초기화
         for (int i = 1; i <= V; i++) {
-            for (int j = 1; j <= V; j++) {
-                if (i == j) {
-                    dist[i][j] = 0;
-                } else {
-                    dist[i][j] = INF;
-                }
-            }
+            Arrays.fill(dist[i], INF);
         }
 
         // 도로 정보 입력 받기
@@ -44,8 +38,8 @@ public class Main {
         for (int k = 1; k <= V; k++) {
             for (int i = 1; i <= V; i++) {
                 for (int j = 1; j <= V; j++) {
-                    if (dist[i][k] != INF && dist[k][j] != INF && dist[i][j] > dist[i][k] + dist[k][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
+                    if (dist[i][k] != INF && dist[k][j] != INF) {
+                        dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
                     }
                 }
             }
