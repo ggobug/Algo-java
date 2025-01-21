@@ -7,15 +7,20 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int r = 31;
-        int M = 1234567891;
+        long M = 1234567891;
 
         int L = Integer.parseInt(br.readLine());    // 문자열의 길이
         String str = br.readLine();
 
-        int hash = 0;
+        long hash = 0;
+        long rPower = 1;
+
         for (int i = 0; i < L; i++) {
-            hash += ((str.charAt(i) - 96) * (int) Math.pow(r, i)) % M;
+            int value = str.charAt(i) - 'a' + 1;
+            hash = (hash + (value * rPower) % M) % M;
+            rPower = (rPower * r) % M;
         }
+
         System.out.println(hash);
     }
 }
