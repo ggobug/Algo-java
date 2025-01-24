@@ -6,43 +6,24 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int T = Integer.parseInt(br.readLine());
+
         int A = 300;
         int B = 60;
         int C = 10;
 
-        int count = 0;
+        int countA = T / A;
+        T %= A;
 
-        int aCount = T / A;
-        int bCount = 0;
-        int cCount = 0;
-        int res = 0;
-        while (aCount >= 0) {
-            res = T - aCount * A;
-            if (res == 0) {
-                System.out.println(aCount);
-                return;
-            }
-            bCount = res / B;
-            while (bCount >= 0) {
-                res = res - bCount * B;
-                if (res == 0) {
-                    System.out.println(aCount + " " + bCount + " " + cCount);
-                    return;
-                }
-                cCount = res / C;
-                while (cCount >= 0) {
-                    res = res - cCount * C;
-                    if (res == 0) {
-                        System.out.println(aCount + " " + bCount + " " + cCount);
-                        return;
-                    }
-                    cCount--;
-                }
-                bCount--;
+        int countB = T / B;
+        T %= B;
 
-            }
-            aCount--;
+        int countC = T / C;
+        T %= C;
+
+        if (T == 0) {
+            System.out.println(countA + " " + countB + " " + countC);
+        } else {
+            System.out.println(-1);
         }
-        System.out.println(-1);
     }
 }
