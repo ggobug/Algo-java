@@ -1,6 +1,3 @@
-// DFS와 BFS
-// https://www.acmicpc.net/problem/1260
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,81 +5,78 @@ import java.util.*;
 
 public class Main {
 
+    static int N, M, V;    // 정점의 개수, 간선의 개수, 시작 정점
+    static ArrayList<Integer>[] graph;
+    static boolean[] visited;
+    static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        String[] parts = br.readLine().split(" ");
+        N = Integer.parseInt(parts[0]);
+        M = Integer.parseInt(parts[1]);
+        V = Integer.parseInt(parts[2]);
 
-        int N = Integer.parseInt(st.nextToken());   // 정점의 수
-        int M = Integer.parseInt(st.nextToken());   // 간선의 수
-        int V = Integer.parseInt(st.nextToken());   // 시작 정점
-        ArrayList<Integer>[] graph = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) graph[i] = new ArrayList<>();
-
-        for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            graph[a].add(b);
-            graph[b].add(a);
+        //그래프 초기화
+        graph = new ArrayList[N + 1];
+        for (int i = 0; i <= N; i++) {
+            graph[i] = new ArrayList<>();
         }
 
+        //간선 정보 입력 받기
+        for (int i = 0; i < M; i++) {
+            parts = br.readLine().split(" ");
+            int from = Integer.parseInt(parts[0]);
+            int to = Integer.parseInt(parts[1]);
+            graph[from].add(to);
+            graph[to].add(from);
+        }
+        //그래프 오름차순 정렬
         for (int i = 1; i <= N; i++) {
             Collections.sort(graph[i]);
         }
 
-        List<Integer> dfsOrder = dfs(N, M, V, graph);
-        List<Integer> bfsOrder = bfs(N, M, V, graph);
-
-        StringBuilder sb = new StringBuilder();
-        for (int num : dfsOrder) {
-            sb.append(num).append(" ");
-        }
-        sb.append("\n");
-        for (int num : bfsOrder) {
-            sb.append(num).append(" ");
-        }
+        //깊이우선탐색
+        visited = new boolean[N + 1];
+        dfs(V);
         sb.append("\n");
 
+        //너비우선탐색
+        Arrays.fill(visited, false);
+        bfs(V);
+
+        //결과 출력
         System.out.println(sb);
-
     }
 
-    static List<Integer> dfs(int N, int M, int V, ArrayList<Integer>[] graph) {
-        boolean[] visited = new boolean[N + 1];
-        List<Integer> order = new ArrayList<>();
-        dfsRecur(V, graph, visited, order);
-        return order;
-    }
+    //깊이우선탐색
+    static void dfs(int node) {
+        //노드 방문
+        visited[node] = true;
+        sb.append(node).append(" ");
 
-    static void dfsRecur(int v, ArrayList<Integer>[] graph, boolean[] visited, List<Integer> order) {
-        visited[v] = true;
-        order.add(v);
-        for (int next : graph[v]) {
-            if (!visited[next]) {
-                dfsRecur(next, graph, visited, order);
-            }
+        // 인접 노드 탐색
+        for (int next : graph[node]) {
+            if (visited[next]) continue;
+            dfs(next);
         }
     }
 
-    static List<Integer> bfs(int N, int M, int V, ArrayList<Integer>[] graph) {
-        boolean[] visited = new boolean[N + 1];
-        List<Integer> order = new ArrayList<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(V);
-        visited[V] = true;
+    //너비우선탐색
+    static void bfs(int node) {
+        Queue<Integer> que = new LinkedList<>();
+        que.add(node);
+        visited[node] = true;
 
-        while (!queue.isEmpty()) {
-            int v = queue.poll();
-            order.add(v);
+        while (!que.isEmpty()) {
+            int cur = que.poll();
+            sb.append(cur).append(" ");
 
-            for (int next : graph[v]) {
-                if (!visited[next]) {
-                    visited[next] = true;
-                    queue.add(next);
-                }
+            for (int next : graph[cur]) {
+                if (visited[next]) continue;
+                que.add(next);
+                visited[next] = true;
             }
         }
-        return order;
     }
 }
-
