@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        long[] dp = new long[N + 2];
+        long[] dp = new long[N + 1];
         int[] terms = new int[N];
         int[] prices = new int[N];
 
