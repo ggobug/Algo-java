@@ -7,45 +7,43 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int N = Integer.parseInt(st.nextToken());
-        int[] seq = new int[N];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
+        int n = Integer.parseInt(br.readLine());
+        int[] seq = new int[n];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
             seq[i] = Integer.parseInt(st.nextToken());
         }
-        st = new StringTokenizer(br.readLine());
-        int x = Integer.parseInt(st.nextToken());
 
-        // 수열 오름차순으로 정렬
+        int x = Integer.parseInt(br.readLine());
+
+        //1. 수열 오름차순 정렬
         Arrays.sort(seq);
 
-        // 쌍 찾기
-        int answer = 0; // 조건을 만족하는 쌍의 개수
+        //2. 쌍 찾기
+        int pairCount = 0;  // 쌍의 개수
         for (int i = 0; i < seq.length; i++) {
             int target = x - seq[i];
-            if (target <= seq[i]) continue;
-            if (findPair(seq, target)) answer++;
+            if (seq[i] >= target) break;
+
+            // 2-1. 수열에서 target 탐색
+            int left = 0;
+            int right = seq.length - 1;
+            int mid = -1;
+
+            while (left <= right) {
+                mid = (left + right) / 2;
+                if (seq[mid] == target) {       // 목표값 찾으면 탐색 종료
+                    pairCount++;
+                    break;
+                } else if (seq[mid] > target) {    // 목표값보다 크면 왼쪽 탐색
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
         }
-        System.out.println(answer);
-    }
-
-    // 투포인터 알고리즘을 이용한 쌍 찾기
-    static boolean findPair(int[] arr, int target) {
-        int l = 0, r = arr.length - 1;
-        int mid;
-        while (l <= r) {
-            mid = (l + r) / 2;
-            // 목표값 발견
-            if (arr[mid] == target) return true;
-
-            // 목표값보다 큰 경우 : 왼쪽 탐색
-            if (arr[mid] > target) r = mid - 1;
-
-            // 목표값보다 작은 경우 : 오른쪽 탐색
-            else l = mid + 1;
-        }
-        return false;
+        System.out.println(pairCount);
     }
 }
