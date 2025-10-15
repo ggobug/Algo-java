@@ -3,6 +3,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -22,18 +23,31 @@ public class Main {
 
         int max = -1;
 
-        //1.완탐
-        for (int a = 0; a < N - 2; a++) {
-            for (int b = a + 1; b < N - 1; b++) {
-                for (int c = b + 1; c < N; c++) {
-                    int sum = cards[a] + cards[b] + cards[c];
-                    if (sum <= M && sum > max) {
-                        max = sum;
+        //2.정렬, 이진탐색
+        Arrays.sort(cards);
+
+        for (int i = 0; i < N - 2; i++) {
+            for (int j = i + 1; j < N - 1; j++) {
+                int remain = M - (cards[i] + cards[j]);
+                int left = j + 1, right = N - 1;
+                while (left <= right) {
+                    int mid = (left + right) / 2;
+                    int sum = cards[i] + cards[j] + cards[mid];
+
+                    if (sum == M) {
+                        max = M;
+                        break;
+                    }
+                    if (sum < M) {
+                        max = Math.max(max, sum);
+                        left = mid + 1;
+                    } else {
+                        right = mid - 1;
                     }
                 }
             }
         }
-
+        
         System.out.println(max);
 
 
